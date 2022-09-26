@@ -27,5 +27,7 @@ public class PlayerMovement : MonoBehaviour
             transform.position = new Vector3(Mathf.Clamp(transform.position.x, -1.4f, 1.4f), transform.position.y, transform.position.z);
             lastMousePoint = Input.mousePosition.x;
         }
+
+        transform.position = new Vector3(transform.position.x, transform.position.y, transform.position.z + 5f * Time.deltaTime);
     }
 }
