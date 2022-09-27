@@ -6,6 +6,7 @@ TagManager:
   tags:
   - Container
   - Collectable
+  - Spinner
   layers:
   - Default
   - TransparentFX

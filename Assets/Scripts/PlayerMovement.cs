@@ -53,8 +53,18 @@ public class PlayerMovement : MonoBehaviour
         }
     }
 
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.CompareTag("Spinner"))
+        {
+            Destroy(other.gameObject);
+            transform.GetChild(0).gameObject.SetActive(true);
+        }
+    }
+
     private void StopMovement()
     {
+        transform.GetChild(0).gameObject.SetActive(false);
         isStop = true;
     }
 
