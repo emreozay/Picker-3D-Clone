@@ -6,9 +6,12 @@ public class GateMovement : MonoBehaviour
 {
     private float signOfAngle;
     private float angle;
+    private bool isGatesUp;
 
     void Start()
     {
+        ContainerControl.containerPass += LiftGates;
+
         signOfAngle = Mathf.Sign(transform.localPosition.x);
 
         if (signOfAngle == 1)
@@ -19,7 +22,21 @@ public class GateMovement : MonoBehaviour
 
     void Update()
     {
-        if (transform.localRotation.eulerAngles.y * signOfAngle < angle * signOfAngle || transform.localRotation.eulerAngles.y == 0f)
-            transform.RotateAround(transform.parent.position, Vector3.forward, 20 * signOfAngle * Time.deltaTime);
+        if (isGatesUp && (transform.localRotation.eulerAngles.y * signOfAngle < angle * signOfAngle || transform.localRotation.eulerAngles.y == 0f))
+            transform.RotateAround(transform.parent.position, Vector3.forward, 30 * signOfAngle * Time.deltaTime);
+
+        if (isGatesUp && transform.localRotation.eulerAngles.y * signOfAngle >= angle * signOfAngle)
+        {
+            if(ContainerControl.gatesUp != null)
+            {
+                ContainerControl.gatesUp();
+                isGatesUp = false;
+            }
+        }
+    }
+
+    private void LiftGates()
+    {
+        isGatesUp = true;
     }
 }
