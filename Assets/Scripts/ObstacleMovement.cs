@@ -4,8 +4,13 @@ using UnityEngine;
 
 public class ObstacleMovement : MonoBehaviour
 {
-    void Update()
+    private void Start()
     {
-        
+        ContainerControl.containerStop += AddForceToObstacles;
+    }
+
+    private void AddForceToObstacles()
+    {
+        GetComponent<Rigidbody>().AddForce(Vector3.forward * 3f, ForceMode.Impulse);
     }
 }
