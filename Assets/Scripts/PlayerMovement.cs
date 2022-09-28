@@ -1,6 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class PlayerMovement : MonoBehaviour
 {
@@ -20,6 +18,19 @@ public class PlayerMovement : MonoBehaviour
 
     void Update()
     {
+        CheckInput();
+    }
+
+    private void FixedUpdate()
+    {
+        if (!isStop)
+        {
+            MovePlayer();
+        }
+    }
+
+    private void CheckInput()
+    {
         if (Input.GetMouseButtonDown(0))
         {
             isMouseDown = true;
@@ -27,29 +38,26 @@ public class PlayerMovement : MonoBehaviour
         }
         else if (Input.GetMouseButtonUp(0))
         {
-            isMouseDown= false;
+            isMouseDown = false;
         }
     }
 
-    private void FixedUpdate()
+    private void MovePlayer()
     {
-        if (!isStop)
+        if (isMouseDown)
         {
-            if (isMouseDown)
-            {
-                float difference = Input.mousePosition.x - lastMousePoint;
+            float difference = Input.mousePosition.x - lastMousePoint;
 
-                float xPos = transform.position.x + difference * Time.deltaTime * speed;
-                xPos = Mathf.Clamp(xPos, -1.4f, 1.4f);
+            float xPos = transform.position.x + difference * Time.deltaTime * speed;
+            xPos = Mathf.Clamp(xPos, -1.4f, 1.4f);
 
-                rb.MovePosition(new Vector3(xPos, transform.position.y, transform.position.z + 3f * Time.fixedDeltaTime));
+            rb.MovePosition(new Vector3(xPos, transform.position.y, transform.position.z + 3f * Time.fixedDeltaTime));
 
-                lastMousePoint = Input.mousePosition.x;
-            }
-            else
-            {
-                rb.MovePosition(new Vector3(transform.position.x, transform.position.y, transform.position.z + 3f * Time.fixedDeltaTime));
-            }
+            lastMousePoint = Input.mousePosition.x;
+        }
+        else
+        {
+            rb.MovePosition(new Vector3(transform.position.x, transform.position.y, transform.position.z + 3f * Time.fixedDeltaTime));
         }
     }
 

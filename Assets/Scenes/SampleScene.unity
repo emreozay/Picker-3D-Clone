@@ -6420,6 +6420,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   containerPassColor: {r: 0.25490198, g: 0.67058825, b: 0.28235295, a: 0}
+  containerUpSpeed: 3
 --- !u!4 &1756155118 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 936778847797533352, guid: b4f9bd95243b0184b8dc6cacaf71ea8d,

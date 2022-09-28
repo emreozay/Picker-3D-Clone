@@ -1,9 +1,8 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class GateMovement : MonoBehaviour
 {
+    [SerializeField] private float gateSpeed = 50f;
     private float signOfAngle;
     private float angle;
     private bool isGatesUp;
@@ -22,12 +21,26 @@ public class GateMovement : MonoBehaviour
 
     void Update()
     {
-        if (isGatesUp && (transform.localRotation.eulerAngles.y * signOfAngle < angle * signOfAngle || transform.localRotation.eulerAngles.y == 0f))
-            transform.RotateAround(transform.parent.position, Vector3.forward, 30 * signOfAngle * Time.deltaTime);
+        OpenGates();
 
-        if (isGatesUp && transform.localRotation.eulerAngles.y * signOfAngle >= angle * signOfAngle)
+        GatesFullyOpen();
+    }
+
+    private void OpenGates()
+    {
+        bool shouldOpen = isGatesUp && (transform.localRotation.eulerAngles.y * signOfAngle < angle * signOfAngle || transform.localRotation.eulerAngles.y == 0f);
+
+        if (shouldOpen)
+            transform.RotateAround(transform.parent.position, Vector3.forward, gateSpeed * signOfAngle * Time.deltaTime);
+    }
+
+    private void GatesFullyOpen()
+    {
+        bool fullyOpen = isGatesUp && transform.localRotation.eulerAngles.y * signOfAngle >= angle * signOfAngle;
+
+        if (fullyOpen)
         {
-            if(ContainerControl.gatesUp != null)
+            if (ContainerControl.gatesUp != null)
             {
                 ContainerControl.gatesUp();
                 isGatesUp = false;
