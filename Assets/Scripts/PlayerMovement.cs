@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SocialPlatforms;
 
 public class PlayerMovement : MonoBehaviour
 {
@@ -72,21 +73,20 @@ public class PlayerMovement : MonoBehaviour
             Destroy(other.gameObject);
             transform.GetChild(0).gameObject.SetActive(true);
         }
-    }
 
-    private void OnCollisionEnter(Collision collision)
-    {
-        if (collision.gameObject.CompareTag("Collectable"))
+        if (other.CompareTag("Collectable"))
         {
-            collectedObjects.Add(collision.gameObject);
+            collectedObjects.Add(other.gameObject);
+            other.GetComponent<Renderer>().material.color = Color.black;
         }
     }
 
-    private void OnCollisionExit(Collision collision)
+    private void OnTriggerExit(Collider other)
     {
-        if (collision.gameObject.CompareTag("Collectable"))
+        if (other.CompareTag("Collectable"))
         {
-            collectedObjects.Remove(collision.gameObject);
+            collectedObjects.Remove(other.gameObject);
+            other.GetComponent<Renderer>().material.color = Color.white;
         }
     }
 
@@ -97,8 +97,15 @@ public class PlayerMovement : MonoBehaviour
 
         for (int i = 0; i < collectedObjects.Count; i++)
         {
-            collectedObjects[i].GetComponent<Rigidbody>().AddForce(Vector3.forward * forceSpeed, ForceMode.Impulse);
+            GameObject obj = collectedObjects[i];
+
+            if (obj != null)
+            {
+                obj.GetComponent<Rigidbody>().AddForce(new Vector3(0, 1f, 1f) * forceSpeed, ForceMode.Impulse);
+            }
         }
+
+        collectedObjects.Clear();
     }
 
     private void ContinueMovement()

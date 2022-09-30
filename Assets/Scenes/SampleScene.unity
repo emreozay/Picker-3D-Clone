@@ -195,7 +195,20 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   speed: 0.5
-  forceSpeed: 3
+  forceSpeed: 3.5
+--- !u!65 &36978060
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 36978054}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 1.3386743, y: 2, z: 1.6556818}
+  m_Center: {x: -0.019127965, y: 0.50000006, z: 0.35709488}
 --- !u!4 &36978062 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 42008310153f6c547a7ee80ec0741d6c,

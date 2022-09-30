@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using UnityEngine;
 
 public class ContainerControl : MonoBehaviour
@@ -8,10 +9,15 @@ public class ContainerControl : MonoBehaviour
     private Vector3 targetPosition;
     private int sphereCount;
     private bool isUp;
+    private bool isTrigger;
 
     public static Action containerStop;
     public static Action containerPass;
     public static Action gatesUp;
+
+    public static int index = 0;
+
+    private float timer = 0.0f;
 
     private void Start()
     {
@@ -20,6 +26,8 @@ public class ContainerControl : MonoBehaviour
 
     private void Update()
     {
+        timer += Time.deltaTime;
+
         if (isUp)
         {
             MoveContainerUp();
@@ -34,7 +42,11 @@ public class ContainerControl : MonoBehaviour
         {
             isUp = false;
             if (containerPass != null)
+            {
+                print("WORKED!");
+                ContainerControl.index++;
                 containerPass();
+            }
         }
     }
 
@@ -46,19 +58,30 @@ public class ContainerControl : MonoBehaviour
             Destroy(collision.gameObject);
         }
 
-        if (sphereCount >= 10)
+        if (sphereCount >= 10 && timer >= 5f)
         {
             isUp = true;
             transform.GetComponent<Renderer>().material.color = containerPassColor;
+
+            timer = 0f;
         }
     }
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.transform.CompareTag("Player"))
+        if (other.transform.CompareTag("Player") && !isTrigger)
         {
             if (containerStop != null)
                 containerStop();
+
+            StartCoroutine(SetTriggerOnAndOff());
         }
+    }
+
+    private IEnumerator SetTriggerOnAndOff()
+    {
+        isTrigger = true;
+        yield return new WaitForSeconds(5f);
+        isTrigger = false;
     }
 }

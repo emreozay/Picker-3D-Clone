@@ -3,6 +3,9 @@
 public class GateMovement : MonoBehaviour
 {
     [SerializeField] private float gateSpeed = 50f;
+    private static int gateGlobalIndex = 1;
+    public int gateIndex = 0;
+
     private float signOfAngle;
     private float angle;
     private bool isGatesUp;
@@ -10,6 +13,8 @@ public class GateMovement : MonoBehaviour
     void Start()
     {
         ContainerControl.containerPass += LiftGates;
+
+        gateIndex = gateGlobalIndex++;
 
         signOfAngle = Mathf.Sign(transform.localPosition.x);
 
@@ -50,6 +55,8 @@ public class GateMovement : MonoBehaviour
 
     private void LiftGates()
     {
-        isGatesUp = true;
+        print(ContainerControl.index * 2 + " " + gateIndex);
+        if(ContainerControl.index * 2 >= gateIndex)
+            isGatesUp = true;
     }
 }
