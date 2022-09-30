@@ -7,8 +7,13 @@ using UnityEngine;
 public class Level : ScriptableObject
 {
     public GameObject levelBase;
-    public GameObject collectableObject;
 
-    public CollectableObjectType collectableObjectType;
-    public CollectableObjectShape collectableObjectShape;
+    [Header("First stage")]
+    public CollectableObject[] collectableObjects1;
+
+    [Header("Second stage")]
+    public CollectableObject[] collectableObjects2;
+
+    [Header("Final stage")]
+    public CollectableObject[] collectableObjects3;
 }

@@ -14,7 +14,33 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   levelBase: {fileID: 3812528496923459204, guid: 7e48552e939636944942a4f0fc3f9b8d,
     type: 3}
-  collectableObject: {fileID: 7642453992658193898, guid: b4f9bd95243b0184b8dc6cacaf71ea8d,
-    type: 3}
-  collectableObjectType: 2
-  collectableObjectShape: 1
+  collectableObjects1:
+  - type: 0
+    shape: 0
+    position: {x: 0, y: 0, z: 0}
+  - type: 1
+    shape: 1
+    position: {x: 1, y: 0, z: 10}
+  - type: 2
+    shape: 2
+    position: {x: -1, y: 0, z: 20}
+  collectableObjects2:
+  - type: 0
+    shape: 1
+    position: {x: 0, y: 0, z: 50}
+  - type: 1
+    shape: 2
+    position: {x: 0, y: 0, z: 60}
+  - type: 2
+    shape: 0
+    position: {x: 0, y: 0, z: 70}
+  collectableObjects3:
+  - type: 1
+    shape: 0
+    position: {x: 0, y: 0, z: 100}
+  - type: 0
+    shape: 2
+    position: {x: 0, y: 0, z: 110}
+  - type: 2
+    shape: 1
+    position: {x: 0, y: 0, z: 120}
