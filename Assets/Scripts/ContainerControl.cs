@@ -1,11 +1,12 @@
 ﻿using System;
 using System.Collections;
+using TMPro;
 using UnityEngine;
 
 public class ContainerControl : MonoBehaviour
 {
     [SerializeField] private Color containerPassColor;
-    [SerializeField] private float containerUpSpeed = 3f;
+    private float containerUpSpeed = 5f;
     private Vector3 targetPosition;
     private int sphereCount;
     private bool isUp;
@@ -19,9 +20,16 @@ public class ContainerControl : MonoBehaviour
 
     private float timer = 0.0f;
 
+    private TextMeshPro textMesh;
+    private int objectAmount;
+
+
     private void Start()
     {
         targetPosition = new Vector3(transform.position.x, -0.165f, transform.position.z);
+
+        textMesh = GetComponentInChildren<TextMeshPro>();
+        objectAmount = int.Parse(textMesh.text.Substring(3));
     }
 
     private void Update()
@@ -43,7 +51,6 @@ public class ContainerControl : MonoBehaviour
             isUp = false;
             if (containerPass != null)
             {
-                print("WORKED!");
                 ContainerControl.index++;
                 containerPass();
             }
@@ -56,12 +63,18 @@ public class ContainerControl : MonoBehaviour
         {
             sphereCount++;
             Destroy(collision.gameObject);
+
+            if (textMesh != null)
+                textMesh.text = sphereCount + " / " + objectAmount;
         }
 
-        if (sphereCount >= 10 && timer >= 5f)
+        if (sphereCount >= objectAmount && timer >= 5f)
         {
             isUp = true;
             transform.GetComponent<Renderer>().material.color = containerPassColor;
+
+            Destroy(textMesh, 0.5f);
+            //textMesh.enabled = false;
 
             timer = 0f;
         }

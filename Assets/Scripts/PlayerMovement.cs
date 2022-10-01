@@ -77,7 +77,6 @@ public class PlayerMovement : MonoBehaviour
         if (other.CompareTag("Collectable"))
         {
             collectedObjects.Add(other.gameObject);
-            other.GetComponent<Renderer>().material.color = Color.black;
         }
     }
 
@@ -86,7 +85,6 @@ public class PlayerMovement : MonoBehaviour
         if (other.CompareTag("Collectable"))
         {
             collectedObjects.Remove(other.gameObject);
-            other.GetComponent<Renderer>().material.color = Color.white;
         }
     }
 

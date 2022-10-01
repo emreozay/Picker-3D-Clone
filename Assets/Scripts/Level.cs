@@ -8,6 +8,16 @@ public class Level : ScriptableObject
 {
     public GameObject levelBase;
 
+    [Header("First Stage!")]
+    public LevelStage firstStage;
+
+    [Header("Second stage!")]
+    public LevelStage secondStage;
+
+    [Header("Final stage!")]
+    public LevelStage finalStage;
+
+    /*
     [Header("First stage")]
     public CollectableObject[] collectableObjects1;
 
@@ -15,5 +25,5 @@ public class Level : ScriptableObject
     public CollectableObject[] collectableObjects2;
 
     [Header("Final stage")]
-    public CollectableObject[] collectableObjects3;
+    public CollectableObject[] collectableObjects3;*/
 }

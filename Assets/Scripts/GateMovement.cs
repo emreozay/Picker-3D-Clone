@@ -2,7 +2,7 @@
 
 public class GateMovement : MonoBehaviour
 {
-    [SerializeField] private float gateSpeed = 50f;
+    private float gateSpeed = 70f;
     private static int gateGlobalIndex = 1;
     public int gateIndex = 0;
 
@@ -55,7 +55,6 @@ public class GateMovement : MonoBehaviour
 
     private void LiftGates()
     {
-        print(ContainerControl.index * 2 + " " + gateIndex);
         if(ContainerControl.index * 2 >= gateIndex)
             isGatesUp = true;
     }
