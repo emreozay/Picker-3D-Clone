@@ -3,18 +3,15 @@
 public class GateMovement : MonoBehaviour
 {
     private float gateSpeed = 70f;
-    private static int gateGlobalIndex = 1;
-    public int gateIndex = 0;
-
     private float signOfAngle;
     private float angle;
+
     private bool isGatesUp;
+    private bool isThisGate;
 
     void Start()
     {
         ContainerControl.containerPass += LiftGates;
-
-        gateIndex = gateGlobalIndex++;
 
         signOfAngle = Mathf.Sign(transform.localPosition.x);
 
@@ -29,6 +26,12 @@ public class GateMovement : MonoBehaviour
         OpenGates();
 
         GatesFullyOpen();
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.CompareTag("Player"))
+            isThisGate = true;
     }
 
     private void OpenGates()
@@ -49,13 +52,14 @@ public class GateMovement : MonoBehaviour
             {
                 ContainerControl.gatesUp();
                 isGatesUp = false;
+                isThisGate = false;
             }
         }
     }
 
     private void LiftGates()
     {
-        if(ContainerControl.index * 2 >= gateIndex)
+        if(isThisGate)
             isGatesUp = true;
     }
 }
