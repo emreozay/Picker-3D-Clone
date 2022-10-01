@@ -107,7 +107,7 @@ public class LevelGenerator : MonoBehaviour
         {
             level = levels[i];
 
-            basePosition = new Vector3(0, 0, 158.4f * i);
+            basePosition = new Vector3(0, 0, 171.6f * i);
             
             
             SetContainerText();
