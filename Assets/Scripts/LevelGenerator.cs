@@ -6,17 +6,24 @@ using UnityEngine;
 
 public class LevelGenerator : MonoBehaviour
 {
-    [SerializeField] private Level level;
+    [SerializeField] private GameObject baseLevel;
+    [SerializeField] private Transform collectibleObjectParent;
+    private Level level;
     private List<GameObject> collectableObjectPrefabs;
     private List<GameObject> containers;
+    private List<Level> levels;
+
+    private Vector3 basePosition;
 
     void Start()
     {
-        SetContainerText();
-        Instantiate(level.levelBase);
-
         GetCollectableObjects();
-        InstantiateCollectibleObjects();
+        GetLevels();
+
+        //SetContainerText();
+        //Instantiate(levelBase);
+
+        //InstantiateCollectibleObjects();
     }
 
     private void SetContainerText()
@@ -25,7 +32,7 @@ public class LevelGenerator : MonoBehaviour
 
         for (int i = 0; i < 3; i++)
         {
-            Transform tempContainer = level.levelBase.transform.GetChild(i).Find("Container");
+            Transform tempContainer = baseLevel.transform.GetChild(i).Find("Container");
 
             if (tempContainer != null)
                 containers.Add(tempContainer.gameObject);
@@ -57,7 +64,7 @@ public class LevelGenerator : MonoBehaviour
             string objectName = type + shape;
 
             GameObject temp = collectableObjectPrefabs.Where(obj => obj.name == objectName).SingleOrDefault();
-            Instantiate(temp, level.firstStage.collectableObject[i].position, Quaternion.identity);
+            Instantiate(temp, basePosition + level.firstStage.collectableObject[i].position, Quaternion.identity, collectibleObjectParent);
         }
 
         for (int i = 0; i < level.secondStage.collectableObject.Length; i++)
@@ -68,7 +75,7 @@ public class LevelGenerator : MonoBehaviour
             string objectName = type + shape;
 
             GameObject temp = collectableObjectPrefabs.Where(obj => obj.name == objectName).SingleOrDefault();
-            Instantiate(temp, level.secondStage.collectableObject[i].position, Quaternion.identity);
+            Instantiate(temp, basePosition + level.secondStage.collectableObject[i].position, Quaternion.identity, collectibleObjectParent);
         }
 
         for (int i = 0; i < level.finalStage.collectableObject.Length; i++)
@@ -79,7 +86,7 @@ public class LevelGenerator : MonoBehaviour
             string objectName = type + shape;
 
             GameObject temp = collectableObjectPrefabs.Where(obj => obj.name == objectName).SingleOrDefault();
-            Instantiate(temp, level.finalStage.collectableObject[i].position, Quaternion.identity);
+            Instantiate(temp, basePosition + level.finalStage.collectableObject[i].position, Quaternion.identity, collectibleObjectParent);
         }
     }
 
@@ -88,6 +95,26 @@ public class LevelGenerator : MonoBehaviour
         collectableObjectPrefabs = new List<GameObject>();
 
         collectableObjectPrefabs = Resources.LoadAll<GameObject>("CollectableObjects").ToList();
+    }
+
+    private void GetLevels()
+    {
+        levels = new List<Level>();
+
+        levels = Resources.LoadAll<Level>("Levels").ToList();
+
+        for (int i = 0; i < levels.Count; i++)
+        {
+            level = levels[i];
+
+            basePosition = new Vector3(0, 0, 158.4f * i);
+            
+            
+            SetContainerText();
+
+            Instantiate(baseLevel, basePosition, Quaternion.identity);
+            InstantiateCollectibleObjects();
+        }
     }
 }
 
