@@ -76,4 +76,9 @@ public class GateMovement : MonoBehaviour
         if(isThisGate)
             isGatesUp = true;
     }
+
+    private void OnDestroy()
+    {
+        ContainerControl.containerPass -= LiftGates;
+    }
 }

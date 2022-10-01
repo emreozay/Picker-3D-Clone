@@ -25,4 +25,10 @@ public class CameraMovement : MonoBehaviour
     {
         isCameraStop = false;
     }
+
+    private void OnDestroy()
+    {
+        ContainerControl.containerStop -= StopCameraMovement;
+        ContainerControl.gatesUp -= ContinueCameraMovement;
+    }
 }

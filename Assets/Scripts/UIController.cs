@@ -110,4 +110,10 @@ public class UIController : MonoBehaviour
         winPanel.SetActive(false);
         Time.timeScale = 1;
     }
+
+    private void OnDestroy()
+    {
+        levelFailed -= LevelFailed;
+        ContainerControl.gatesUp -= NextStage;
+    }
 }

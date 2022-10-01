@@ -74,7 +74,8 @@ public class ContainerControl : MonoBehaviour
             isUp = true;
             transform.GetComponent<Renderer>().material.color = containerPassColor;
 
-            Destroy(textMesh, 0.5f);
+            if (textMesh != null)
+                Destroy(textMesh, 0.5f);
 
             timer = 0f;
         }

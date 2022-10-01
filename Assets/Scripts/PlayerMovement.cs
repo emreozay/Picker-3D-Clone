@@ -91,6 +91,7 @@ public class PlayerMovement : MonoBehaviour
     private void StopMovement()
     {
         transform.GetChild(0).gameObject.SetActive(false);
+        
         isStop = true;
 
         for (int i = 0; i < collectedObjects.Count; i++)
@@ -109,5 +110,11 @@ public class PlayerMovement : MonoBehaviour
     private void ContinueMovement()
     {
         isStop = false;
+    }
+
+    private void OnDestroy()
+    {
+        ContainerControl.containerStop -= StopMovement;
+        ContainerControl.gatesUp -= ContinueMovement;
     }
 }
