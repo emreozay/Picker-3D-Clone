@@ -11,6 +11,7 @@ public class ContainerControl : MonoBehaviour
     private int sphereCount;
     private bool isUp;
     private bool isTrigger;
+    private bool isLose;
 
     public static Action containerStop;
     public static Action containerPass;
@@ -74,9 +75,21 @@ public class ContainerControl : MonoBehaviour
             transform.GetComponent<Renderer>().material.color = containerPassColor;
 
             Destroy(textMesh, 0.5f);
-            //textMesh.enabled = false;
 
             timer = 0f;
+        }
+    }
+
+    private IEnumerator CheckIfLose()
+    {
+        yield return new WaitForSeconds(2f);
+
+        if(sphereCount < objectAmount)
+        {
+            if (UIController.levelFailed != null)
+                UIController.levelFailed();
+
+            isLose = true;
         }
     }
 
@@ -86,6 +99,9 @@ public class ContainerControl : MonoBehaviour
         {
             if (containerStop != null)
                 containerStop();
+
+            if (!isLose)
+                StartCoroutine(CheckIfLose());
 
             StartCoroutine(SetTriggerOnAndOff());
         }

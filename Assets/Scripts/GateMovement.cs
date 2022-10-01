@@ -9,6 +9,8 @@ public class GateMovement : MonoBehaviour
     private bool isGatesUp;
     private bool isThisGate;
 
+    private static int isBothGatesUp;
+
     void Start()
     {
         ContainerControl.containerPass += LiftGates;
@@ -25,7 +27,8 @@ public class GateMovement : MonoBehaviour
     {
         OpenGates();
 
-        GatesFullyOpen();
+        if(IsGatesFullyOpen())
+            GatesUp();
     }
 
     private void OnTriggerEnter(Collider other)
@@ -42,19 +45,30 @@ public class GateMovement : MonoBehaviour
             transform.RotateAround(transform.parent.position, Vector3.forward, gateSpeed * signOfAngle * Time.deltaTime);
     }
 
-    private void GatesFullyOpen()
+    private void GatesUp()
     {
-        bool fullyOpen = isGatesUp && transform.localRotation.eulerAngles.y * signOfAngle >= angle * signOfAngle;
-
-        if (fullyOpen)
+        if (IsGatesFullyOpen())
         {
             if (ContainerControl.gatesUp != null)
             {
-                ContainerControl.gatesUp();
+                isBothGatesUp++;
+
+                if(isBothGatesUp == 2)
+                {
+                    isBothGatesUp = 0;
+                    ContainerControl.gatesUp();
+                }
+
                 isGatesUp = false;
                 isThisGate = false;
             }
         }
+    }
+
+    private bool IsGatesFullyOpen()
+    {
+        bool isFullyOpen = isGatesUp && transform.localRotation.eulerAngles.y * signOfAngle >= angle * signOfAngle;
+        return isFullyOpen;
     }
 
     private void LiftGates()
