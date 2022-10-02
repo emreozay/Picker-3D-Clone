@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using TMPro;
 using UnityEngine;
+using Random = System.Random;
 
 public class LevelGenerator : MonoBehaviour
 {
@@ -102,16 +103,32 @@ public class LevelGenerator : MonoBehaviour
         collectableObjectPrefabs = Resources.LoadAll<GameObject>("CollectableObjects").ToList();
     }
 
+    private void GetLevels()
+    {
+        levels = new List<Level>();
+        baseLevelObjects = new List<GameObject>();
+
+        levels = Resources.LoadAll<Level>("Levels").ToList();
+        levels = levels.OrderBy(w => w.levelIndex).ToList();
+
+        CreateAndDestroyLevel();
+        isFirstLevel = false;
+    }
+
     private void CreateAndDestroyLevel()
     {
         currentLevel = PlayerPrefs.GetInt("Level", 1);
 
-        if (isFirstLevel)
-            level = levels[currentLevel - 1];
+        if(currentLevel < levels.Count)
+        {
+            if (isFirstLevel)
+                level = levels[currentLevel - 1];
+            else
+                level = levels[currentLevel];
+        }
         else
         {
-            if (currentLevel < levels.Count)
-                level = levels[currentLevel];
+            ContinueWithRandomLevel();
         }
 
         if (baseLevelObjects.Count == 2)
@@ -134,16 +151,19 @@ public class LevelGenerator : MonoBehaviour
         InstantiateCollectibleObjects(level.finalStage.collectableObject);
     }
 
-    private void GetLevels()
+    private void ContinueWithRandomLevel()
     {
-        levels = new List<Level>();
-        baseLevelObjects = new List<GameObject>();
+        var random = new Random();
+        int index = random.Next(levels.Count);
 
-        levels = Resources.LoadAll<Level>("Levels").ToList();
-        levels = levels.OrderBy(w => w.levelIndex).ToList();
+        level = levels[index];
 
-        CreateAndDestroyLevel();
-        isFirstLevel = false;
+        if (isFirstLevel)
+            level.levelIndex = currentLevel;
+        else
+            level.levelIndex = currentLevel + 1;
+
+        levels.Add(level);
     }
 
     private void OnDestroy()
