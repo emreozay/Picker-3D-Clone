@@ -4,7 +4,7 @@ using UnityEngine.SocialPlatforms;
 
 public class PlayerMovement : MonoBehaviour
 {
-    [SerializeField] private float xSpeed = 0.5f;
+    [SerializeField] private float xSpeed = 0.4f;
     [SerializeField] private float forceSpeed = 2.5f;
     private float moveForwardSpeed = 4.5f;
     private float lastMousePoint;
