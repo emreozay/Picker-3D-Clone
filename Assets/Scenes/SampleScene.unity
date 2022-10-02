@@ -1294,7 +1294,7 @@ MonoBehaviour:
     type: 3}
   collectibleObjectParent: {fileID: 2058802492}
   currentLevel: 1
-  changeTheLevel: 1
+  changeTheLevel: 0
 --- !u!4 &746575371
 Transform:
   m_ObjectHideFlags: 0

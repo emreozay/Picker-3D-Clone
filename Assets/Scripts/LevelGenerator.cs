@@ -137,9 +137,12 @@ public class LevelGenerator : MonoBehaviour
         if (isFirstLevel)
             level = levels[currentLevel - 1];
         else
-            level = levels[currentLevel];
+        {
+            if (currentLevel < levels.Count)
+                level = levels[currentLevel];
+        }
 
-        if(baseLevelObjects.Count == 2)
+        if (baseLevelObjects.Count == 2)
         {
             DestroyCollectibleObjects();
 
