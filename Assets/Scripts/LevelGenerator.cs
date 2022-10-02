@@ -200,6 +200,7 @@ public class CollectableObject
 [System.Serializable]
 public class LevelStage
 {
+    [Tooltip("The minimum number of objects required to pass that stage.")]
     public int objectAmount;
     public CollectableObject[] collectableObject;
 }
