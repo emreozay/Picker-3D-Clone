@@ -195,7 +195,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f01ba137511405f41b7eb85c2cfd5b29, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 0.5
+  xSpeed: 0.5
   forceSpeed: 2.5
 --- !u!65 &36978060
 BoxCollider:
@@ -1293,6 +1293,8 @@ MonoBehaviour:
   baseLevel: {fileID: 5106720188047645080, guid: 40e0f7b23019dbd43867474996a342a9,
     type: 3}
   collectibleObjectParent: {fileID: 2058802492}
+  currentLevel: 1
+  changeTheLevel: 1
 --- !u!4 &746575371
 Transform:
   m_ObjectHideFlags: 0
@@ -1598,7 +1600,7 @@ Camera:
     width: 1
     height: 1
   near clip plane: 0.3
-  far clip plane: 200
+  far clip plane: 125
   field of view: 60
   orthographic: 0
   orthographic size: 5

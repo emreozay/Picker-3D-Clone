@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using TMPro;
@@ -8,15 +9,37 @@ public class LevelGenerator : MonoBehaviour
 {
     [SerializeField] private GameObject baseLevel;
     [SerializeField] private Transform collectibleObjectParent;
+
+    [Header("Level Changes")]
+    [SerializeField][Min(1)] private int currentLevel = 1;
+    [Tooltip("If you want to change the level, please mark this as true.")]
+    [SerializeField] private bool changeTheLevel;
+
     private Level level;
-    private List<GameObject> collectableObjectPrefabs;
-    private List<GameObject> containers;
     private List<Level> levels;
 
+    private List<GameObject> collectableObjectPrefabs;
+    private List<GameObject> containers;
+    private List<GameObject> baseLevelObjects;
+
     private Vector3 basePosition;
+    private int zMultiplier = 0;
+    private bool isFirstLevel = true;
+
+    public static Action NewLevel;
+
+    private void Awake()
+    {
+        if (changeTheLevel)
+            PlayerPrefs.SetInt("Level", currentLevel);
+        else
+            currentLevel = PlayerPrefs.GetInt("Level", 1);
+    }
 
     void Start()
     {
+        NewLevel += CreateAndDestroyLevel;
+
         GetCollectableObjects();
         GetLevels();
 
@@ -90,6 +113,16 @@ public class LevelGenerator : MonoBehaviour
         }
     }
 
+    private void DestroyCollectibleObjects()
+    {
+        int totalObject = level.firstStage.collectableObject.Length + level.secondStage.collectableObject.Length + level.finalStage.collectableObject.Length;
+        
+        for (int i = 0; i < totalObject; i++)
+        {
+            Destroy(collectibleObjectParent.GetChild(i).gameObject);
+        }
+    }
+
     private void GetCollectableObjects()
     {
         collectableObjectPrefabs = new List<GameObject>();
@@ -97,24 +130,59 @@ public class LevelGenerator : MonoBehaviour
         collectableObjectPrefabs = Resources.LoadAll<GameObject>("CollectableObjects").ToList();
     }
 
+    private void CreateAndDestroyLevel()
+    {
+        currentLevel = PlayerPrefs.GetInt("Level", 1);
+
+        if (isFirstLevel)
+            level = levels[currentLevel - 1];
+        else
+            level = levels[currentLevel];
+
+        if(baseLevelObjects.Count == 2)
+        {
+            DestroyCollectibleObjects();
+
+            Destroy(baseLevelObjects[0]);
+            baseLevelObjects.RemoveAt(0);
+        }
+
+        basePosition = new Vector3(0, 0, 171.6f * zMultiplier);
+        zMultiplier++;
+
+        SetContainerText();
+
+        baseLevelObjects.Add(Instantiate(baseLevel, basePosition, Quaternion.identity));
+        InstantiateCollectibleObjects();
+    }
+
     private void GetLevels()
     {
         levels = new List<Level>();
+        baseLevelObjects = new List<GameObject>();
 
         levels = Resources.LoadAll<Level>("Levels").ToList();
 
-        for (int i = 0; i < levels.Count; i++)
+        /*for (int i = currentLevel - 1; i < levels.Count; i++)
         {
             level = levels[i];
 
-            basePosition = new Vector3(0, 0, 171.6f * i);
-            
+            basePosition = new Vector3(0, 0, 171.6f * zMultiplier);
+            zMultiplier++;
             
             SetContainerText();
 
             Instantiate(baseLevel, basePosition, Quaternion.identity);
             InstantiateCollectibleObjects();
-        }
+        }*/
+
+        CreateAndDestroyLevel();
+        isFirstLevel = false;
+    }
+
+    private void OnDestroy()
+    {
+        NewLevel -= CreateAndDestroyLevel;
     }
 }
 

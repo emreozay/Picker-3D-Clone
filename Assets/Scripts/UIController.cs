@@ -28,7 +28,10 @@ public class UIController : MonoBehaviour
         Time.timeScale = 0;
         startPanel.SetActive(true);
 
+        currentLevel = PlayerPrefs.GetInt("Level", 1);
+
         orangeColor = new Color(1, 0.3882353f, 0.1882353f);
+        SetLevelTexts();
 
         levelFailed += LevelFailed;
 
@@ -61,9 +64,9 @@ public class UIController : MonoBehaviour
     private void LevelUp()
     {
         currentLevel++;
+        PlayerPrefs.SetInt("Level", currentLevel);
 
-        currentLevelText.text = currentLevel.ToString();
-        nextLevelText.text = (currentLevel + 1).ToString();
+        SetLevelTexts();
 
         for (int i = 0; i < stageImages.Length; i++)
         {
@@ -73,16 +76,27 @@ public class UIController : MonoBehaviour
         currentStage = 0;
     }
 
+    private void SetLevelTexts()
+    {
+        currentLevelText.text = currentLevel.ToString();
+        nextLevelText.text = (currentLevel + 1).ToString();
+    }
+
     private void NextStage()
     {
         Image currentStageImage = stageImages[currentStage];
-        
-        if(currentStageImage != null)
+
+        if (currentStageImage != null)
             currentStageImage.color = orangeColor;
 
         currentStage++;
 
-        if(currentStage >= 3)
+        if (currentStage == 1)
+        {
+            if (LevelGenerator.NewLevel != null)
+                LevelGenerator.NewLevel();
+        } 
+        else if(currentStage >= 3)
         {
             StartCoroutine(WaitForNextLevel());
         }
