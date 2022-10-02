@@ -4,6 +4,8 @@
 
 public class Level : ScriptableObject
 {
+    public int levelIndex;
+
     public LevelStage firstStage;
 
     public LevelStage secondStage;

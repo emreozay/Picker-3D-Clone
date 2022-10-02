@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using TMPro;
@@ -71,8 +72,21 @@ public class LevelGenerator : MonoBehaviour
         }
     }
 
-    private void InstantiateCollectibleObjects()
+    private void InstantiateCollectibleObjects(CollectableObject[] collectableObjects)
     {
+        for (int i = 0; i < collectableObjects.Length; i++)
+        {
+            string type = collectableObjects[i].type.ToString()[0] + collectableObjects[i].type.ToString().Substring(1).ToLowerInvariant();
+            string shape = collectableObjects[i].shape.ToString()[0] + collectableObjects[i].shape.ToString().Substring(1).ToLowerInvariant();
+
+            string objectName = type + shape;
+
+            GameObject temp = collectableObjectPrefabs.Where(obj => obj.name == objectName).SingleOrDefault();
+            Instantiate(temp, basePosition + collectableObjects[i].position, Quaternion.identity, collectibleObjectParent);
+        }
+
+
+        /*
         for (int i = 0; i < level.firstStage.collectableObject.Length; i++)
         {
             string type = level.firstStage.collectableObject[i].type.ToString()[0] + level.firstStage.collectableObject[i].type.ToString().Substring(1).ToLowerInvariant();
@@ -104,7 +118,7 @@ public class LevelGenerator : MonoBehaviour
 
             GameObject temp = collectableObjectPrefabs.Where(obj => obj.name == objectName).SingleOrDefault();
             Instantiate(temp, basePosition + level.finalStage.collectableObject[i].position, Quaternion.identity, collectibleObjectParent);
-        }
+        }*/
     }
 
     private void DestroyCollectibleObjects()
@@ -150,7 +164,10 @@ public class LevelGenerator : MonoBehaviour
         SetContainerText();
 
         baseLevelObjects.Add(Instantiate(baseLevel, basePosition, Quaternion.identity));
-        InstantiateCollectibleObjects();
+
+        InstantiateCollectibleObjects(level.firstStage.collectableObject);
+        InstantiateCollectibleObjects(level.secondStage.collectableObject);
+        InstantiateCollectibleObjects(level.finalStage.collectableObject);
     }
 
     private void GetLevels()
@@ -159,6 +176,7 @@ public class LevelGenerator : MonoBehaviour
         baseLevelObjects = new List<GameObject>();
 
         levels = Resources.LoadAll<Level>("Levels").ToList();
+        levels = levels.OrderBy(w => w.levelIndex).ToList();
 
         CreateAndDestroyLevel();
         isFirstLevel = false;
