@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using TMPro;
@@ -42,11 +41,6 @@ public class LevelGenerator : MonoBehaviour
 
         GetCollectableObjects();
         GetLevels();
-
-        //SetContainerText();
-        //Instantiate(levelBase);
-
-        //InstantiateCollectibleObjects();
     }
 
     private void SetContainerText()
@@ -165,19 +159,6 @@ public class LevelGenerator : MonoBehaviour
         baseLevelObjects = new List<GameObject>();
 
         levels = Resources.LoadAll<Level>("Levels").ToList();
-
-        /*for (int i = currentLevel - 1; i < levels.Count; i++)
-        {
-            level = levels[i];
-
-            basePosition = new Vector3(0, 0, 171.6f * zMultiplier);
-            zMultiplier++;
-            
-            SetContainerText();
-
-            Instantiate(baseLevel, basePosition, Quaternion.identity);
-            InstantiateCollectibleObjects();
-        }*/
 
         CreateAndDestroyLevel();
         isFirstLevel = false;

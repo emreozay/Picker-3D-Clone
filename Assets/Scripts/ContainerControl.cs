@@ -17,8 +17,6 @@ public class ContainerControl : MonoBehaviour
     public static Action containerPass;
     public static Action gatesUp;
 
-    //public static int index = 0;
-
     private float timer = 0.0f;
 
     private TextMeshPro textMesh;
@@ -52,7 +50,6 @@ public class ContainerControl : MonoBehaviour
             isUp = false;
             if (containerPass != null)
             {
-                //ContainerControl.index++;
                 containerPass();
             }
         }
@@ -69,7 +66,7 @@ public class ContainerControl : MonoBehaviour
                 textMesh.text = sphereCount + " / " + objectAmount;
         }
 
-        if (sphereCount >= objectAmount && timer >= 5f) //5 yap
+        if (sphereCount >= objectAmount && timer >= 5f)
         {
             isUp = true;
             transform.GetComponent<Renderer>().material.color = containerPassColor;
