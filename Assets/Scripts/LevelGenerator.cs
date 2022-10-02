@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using TMPro;
@@ -84,41 +83,6 @@ public class LevelGenerator : MonoBehaviour
             GameObject temp = collectableObjectPrefabs.Where(obj => obj.name == objectName).SingleOrDefault();
             Instantiate(temp, basePosition + collectableObjects[i].position, Quaternion.identity, collectibleObjectParent);
         }
-
-
-        /*
-        for (int i = 0; i < level.firstStage.collectableObject.Length; i++)
-        {
-            string type = level.firstStage.collectableObject[i].type.ToString()[0] + level.firstStage.collectableObject[i].type.ToString().Substring(1).ToLowerInvariant();
-            string shape = level.firstStage.collectableObject[i].shape.ToString()[0] + level.firstStage.collectableObject[i].shape.ToString().Substring(1).ToLowerInvariant();
-
-            string objectName = type + shape;
-
-            GameObject temp = collectableObjectPrefabs.Where(obj => obj.name == objectName).SingleOrDefault();
-            Instantiate(temp, basePosition + level.firstStage.collectableObject[i].position, Quaternion.identity, collectibleObjectParent);
-        }
-
-        for (int i = 0; i < level.secondStage.collectableObject.Length; i++)
-        {
-            string type = level.secondStage.collectableObject[i].type.ToString()[0] + level.secondStage.collectableObject[i].type.ToString().Substring(1).ToLowerInvariant();
-            string shape = level.secondStage.collectableObject[i].shape.ToString()[0] + level.secondStage.collectableObject[i].shape.ToString().Substring(1).ToLowerInvariant();
-
-            string objectName = type + shape;
-
-            GameObject temp = collectableObjectPrefabs.Where(obj => obj.name == objectName).SingleOrDefault();
-            Instantiate(temp, basePosition + level.secondStage.collectableObject[i].position, Quaternion.identity, collectibleObjectParent);
-        }
-
-        for (int i = 0; i < level.finalStage.collectableObject.Length; i++)
-        {
-            string type = level.finalStage.collectableObject[i].type.ToString()[0] + level.finalStage.collectableObject[i].type.ToString().Substring(1).ToLowerInvariant();
-            string shape = level.finalStage.collectableObject[i].shape.ToString()[0] + level.finalStage.collectableObject[i].shape.ToString().Substring(1).ToLowerInvariant();
-
-            string objectName = type + shape;
-
-            GameObject temp = collectableObjectPrefabs.Where(obj => obj.name == objectName).SingleOrDefault();
-            Instantiate(temp, basePosition + level.finalStage.collectableObject[i].position, Quaternion.identity, collectibleObjectParent);
-        }*/
     }
 
     private void DestroyCollectibleObjects()

@@ -15,12 +15,7 @@ public class GateMovement : MonoBehaviour
     {
         ContainerControl.containerPass += LiftGates;
 
-        signOfAngle = Mathf.Sign(transform.localPosition.x);
-
-        if (signOfAngle == 1)
-            angle = 60f;
-        else
-            angle = 300f;
+        CalculateGateRotationAngle();
     }
 
     void Update()
@@ -35,6 +30,16 @@ public class GateMovement : MonoBehaviour
     {
         if (other.CompareTag("Player"))
             isThisGate = true;
+    }
+
+    private void CalculateGateRotationAngle()
+    {
+        signOfAngle = Mathf.Sign(transform.localPosition.x);
+
+        if (signOfAngle == 1)
+            angle = 60f;
+        else
+            angle = 300f;
     }
 
     private void OpenGates()
