@@ -1,4 +1,4 @@
-# Picker-3D-Clone
+# Picker 3D Clone
 
 Google Play link of the original game: [Picker 3D](https://play.google.com/store/apps/details?id=com.ponyom.collect&hl=en)
 
