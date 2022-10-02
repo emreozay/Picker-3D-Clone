@@ -10,10 +10,10 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 241c3f5ffbebb974b9eb25101bef5415, type: 3}
-  m_Name: Level2
+  m_Name: Level3
   m_EditorClassIdentifier: 
   firstStage:
-    objectAmount: 10
+    objectAmount: 15
     collectableObject:
     - type: 1
       shape: 0
@@ -25,7 +25,7 @@ MonoBehaviour:
       shape: 2
       position: {x: -1, y: 0, z: 20}
   secondStage:
-    objectAmount: 15
+    objectAmount: 20
     collectableObject:
     - type: 0
       shape: 1
@@ -37,7 +37,7 @@ MonoBehaviour:
       shape: 0
       position: {x: 0, y: 0, z: 70}
   finalStage:
-    objectAmount: 15
+    objectAmount: 30
     collectableObject:
     - type: 1
       shape: 0
