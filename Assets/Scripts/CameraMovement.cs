@@ -3,6 +3,7 @@
 public class CameraMovement : MonoBehaviour
 {
     private bool isCameraStop;
+    private float cameraMoveSpeed = 4.5f;
 
     private void Start()
     {
@@ -13,7 +14,7 @@ public class CameraMovement : MonoBehaviour
     private void LateUpdate()
     {
         if(!isCameraStop)
-            transform.position = new Vector3(transform.position.x, transform.position.y, transform.position.z + 3f * Time.deltaTime);
+            transform.position = new Vector3(transform.position.x, transform.position.y, transform.position.z + cameraMoveSpeed * Time.deltaTime);
     }
 
     private void StopCameraMovement()

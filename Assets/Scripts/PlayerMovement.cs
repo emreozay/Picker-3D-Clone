@@ -4,8 +4,9 @@ using UnityEngine.SocialPlatforms;
 
 public class PlayerMovement : MonoBehaviour
 {
-    [SerializeField] private float speed = 0.5f;
-    [SerializeField] private float forceSpeed = 3f;
+    [SerializeField] private float xSpeed = 0.5f;
+    [SerializeField] private float forceSpeed = 2.5f;
+    private float moveForwardSpeed = 4.5f;
     private float lastMousePoint;
     private bool isMouseDown = false;
     private Rigidbody rb;
@@ -53,16 +54,16 @@ public class PlayerMovement : MonoBehaviour
         {
             float difference = Input.mousePosition.x - lastMousePoint;
 
-            float xPos = transform.position.x + difference * Time.deltaTime * speed;
+            float xPos = transform.position.x + difference * Time.deltaTime * xSpeed;
             xPos = Mathf.Clamp(xPos, -1.4f, 1.4f);
 
-            rb.MovePosition(new Vector3(xPos, transform.position.y, transform.position.z + 3f * Time.fixedDeltaTime));
+            rb.MovePosition(new Vector3(xPos, transform.position.y, transform.position.z + moveForwardSpeed * Time.fixedDeltaTime));
 
             lastMousePoint = Input.mousePosition.x;
         }
         else
         {
-            rb.MovePosition(new Vector3(transform.position.x, transform.position.y, transform.position.z + 3f * Time.fixedDeltaTime));
+            rb.MovePosition(new Vector3(transform.position.x, transform.position.y, transform.position.z + moveForwardSpeed * Time.fixedDeltaTime));
         }
     }
 
